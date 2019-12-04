@@ -1,15 +1,12 @@
 import React from "react";
 import "../styles/Login.css";
 
-const attendanceBlock = () => {
+const attendanceBlock = props => {
   return (
     <div className="attendanceBlock">
       <div className="App">
         <div className="App-header">
-          <p>
-            Mark you are here in the <b>Bee Here</b> app and entering the
-            following code with your student ID
-          </p>
+          <p>{this.props.name} is here!</p>
         </div>
       </div>
     </div>

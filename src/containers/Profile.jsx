@@ -3,7 +3,7 @@ import "../styles/Login.css";
 
 const Profile = () => {
   return (
-    <div className="Login">
+    <div className="Profile">
       <div className="App">
         <div className="App-header">
           <p>Hello "put professor name here", activate your class below</p>

@@ -3,7 +3,7 @@ import "../styles/Login.css";
 
 const Active = () => {
   return (
-    <div className="Activ">
+    <div className="Active">
       <div className="App">
         <div className="App-header">
           <p>

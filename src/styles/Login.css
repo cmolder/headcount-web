@@ -1,0 +1,42 @@
+.Login {
+    display: flex;
+    flex-direction: column;
+
+    text-align: center;
+    align-items: center;
+    justify-content: top;
+    font-size: calc(10px + 2vmin);
+
+    
+}
+
+.Login input {
+    margin-bottom: 10px;
+    padding: 5px;
+    width: 40%;
+
+    border: 1px solid #ffcc33;
+    border-radius: 5px;
+    font-family: 'Arial', sans-serif;
+}
+
+.Login p {
+    color: #ffcc33;
+    margin: 15px;
+}
+
+.Login button {
+    padding: 5px;
+    width: 40%;
+
+    border: 1px solid #ffcc33;
+    border-radius: 5px;
+}
+
+.Login button:hover {
+    background-color: #bbb;
+}
+
+.Login button:active {
+    background-color: #888;
+}

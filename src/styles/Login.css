@@ -1,19 +1,17 @@
 .Login {
     display: flex;
     flex-direction: column;
+    width: 100%;
 
     text-align: center;
     align-items: center;
-    justify-content: top;
     font-size: calc(10px + 2vmin);
-
-    
 }
 
 .Login input {
     margin-bottom: 10px;
     padding: 5px;
-    width: 40%;
+    width: 20%;
 
     border: 1px solid #ffcc33;
     border-radius: 5px;
@@ -23,11 +21,12 @@
 .Login p {
     color: #ffcc33;
     margin: 15px;
+    word-break: break-word;
 }
 
 .Login button {
     padding: 5px;
-    width: 40%;
+    width: 20%;
 
     border: 1px solid #ffcc33;
     border-radius: 5px;

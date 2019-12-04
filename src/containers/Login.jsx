@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setToken } from '../redux/actions/token';
 import '../styles/Login.css';
 
 const Login = () => {
+
+    const [message, setMessage] = useState('');
 
     const dispatch = useDispatch();      // Items to/from Redux store
     const token    = useSelector(state => state.token.token);
@@ -29,11 +31,12 @@ const Login = () => {
         });
         const authObj = await authResult.json();
 
-        if(typeof authObj.token === 'undefined')
-            console.log("Error authenticating");
-        else {
-            console.log("token: ", authObj.token);
+        if(typeof authObj.token === 'undefined') {
+            dispatch(setToken(''));
+            setMessage('Error authenticating.');
+        } else {
             dispatch(setToken(authObj.token));
+            setMessage(authObj.token);  
         }
     }
 
@@ -43,7 +46,7 @@ const Login = () => {
             <input ref={userInput} type="text" placeholder="Username" name="username"></input>
             <input ref={passInput} type="password" placeholder="Password" name="password"></input>
             <button onClick={() => handleLogin()}>Login</button>
-            <p>{token}</p>
+            <p>{message}</p>
         </div>
     )
 }

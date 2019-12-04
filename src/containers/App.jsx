@@ -1,6 +1,7 @@
-import React from "react";
-import Login from "./Login";
-import Active from ",/Active";
+import React from 'react';
+import Login from './Login';
+import Active from './Active';
+import Profile from './Profile';
 
 import "../styles/App.css";
 
@@ -21,57 +22,19 @@ function App() {
   if (login && active) {
     return (
       <div className="App">
-        <div className="App-header">
-          <p>
-            Mark that you're here in "class name" by opening the <b>Bee Here</b>{" "}
-            app and typing in this class code
-          </p>
-          <h1> </h1>
-          <p> </p>
-          <button type="button">End Attendance</button>
-        </div>
+        <Active/>
       </div>
     );
-  }
-  if (login && !active) {
+  } else if (login && !active) {
     return (
       <div className="App">
-        <div className="App-header">
-          <p>Hello "put professor name here", activate your class below</p>
-          <select>
-            <option value="volvo">Volvo</option>
-            <option value="saab">Saab</option>
-            <option value="mercedes">Mercedes</option>
-            <option value="audi">Audi</option>
-          </select>
-          <br></br>
-          <button type="button">State Attendance</button>
-          <br></br>
-          <p>Register a new Class Below</p>
-          <form id="newClass">
-            Department:<br></br>
-            <input type="text" name="depart"></input>
-            <br></br>
-            Class Number:<br></br>
-            <input type="text" name="Number"></input>
-            <br></br>
-            Class Name:<br></br>
-            <input type="text" name="name"></input>
-            <br></br>
-          </form>
-          <br></br>
-          <p>Get all attendence data:</p>
-          <button>Download Form</button>
-        </div>
+        <Profile/>
       </div>
     );
-  }
-  if (!login) {
+  } else if (!login) {
     return (
-      <div className="App" align="left">
-        <div className="App-header">
-          <Login />
-        </div>
+      <div className="App">
+		<Login />
       </div>
     );
   }

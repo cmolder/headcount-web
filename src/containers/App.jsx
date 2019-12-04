@@ -1,4 +1,6 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { PROFILE, ACTIVE, LOGIN } from '../redux/actions/view';
 import Login from './Login';
 import Active from './Active';
 import Profile from './Profile';
@@ -6,38 +8,34 @@ import Profile from './Profile';
 import "../styles/App.css";
 
 function App() {
-  let login = false; //turns to true when succesful login
-  var active = false; //activates when class activates
+	const view	= useSelector(state => state.view.view); 
 
-  /*
-  var username;
-  var password;
-  var title;
-  var name;
-  var className;
-  var department;
-  var classNumber
-  */
+	switch(view) {
+		case ACTIVE: {
+			return (
+				<div className="App">
+					<Active/>
+				</div>
+			);
+		}
 
-  if (login && active) {
-    return (
-      <div className="App">
-        <Active/>
-      </div>
-    );
-  } else if (login && !active) {
-    return (
-      <div className="App">
-        <Profile/>
-      </div>
-    );
-  } else if (!login) {
-    return (
-      <div className="App">
-		<Login />
-      </div>
-    );
-  }
+		case PROFILE: {
+			return (
+				<div className="App">
+					<Profile/>
+				</div>
+			);
+		}
+
+		case LOGIN:
+		default: { 
+			return (
+				<div className="App">
+					<Login />
+					</div>
+			);
+		}
+	}
 }
 
 export default App;

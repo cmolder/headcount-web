@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { setToken } from '../redux/actions/token';
+import { useDispatch } from 'react-redux';
+import { setToken, clearToken } from '../redux/actions/token';
+import { setView, PROFILE } from '../redux/actions/view';
 import '../styles/Login.css';
 
 const Login = () => {
@@ -8,7 +9,6 @@ const Login = () => {
     const [message, setMessage] = useState('');
 
     const dispatch = useDispatch();      // Items to/from Redux store
-    const token    = useSelector(state => state.token.token);
  
     const userInput = React.createRef(); // References to username and password input
     const passInput = React.createRef();
@@ -32,19 +32,29 @@ const Login = () => {
         const authObj = await authResult.json();
 
         if(typeof authObj.token === 'undefined') {
-            dispatch(setToken(''));
+            dispatch(clearToken());
             setMessage('Error authenticating.');
         } else {
             dispatch(setToken(authObj.token));
-            setMessage(authObj.token);  
+            // setMessage(authObj.token);  
+            dispatch(setView(PROFILE));
         }
+    }
+
+    // Handle the key press in one of the inputs.
+    // - If it is an enter press, go ahead and handle the login
+    const handleKeyPress = (e) => {
+        if (e.key === 'Enter')
+            handleLogin();
     }
 
     return(
         <div className='Login'>
             <p>Bee Here Professor Login</p>
-            <input ref={userInput} type="text" placeholder="Username" name="username"></input>
-            <input ref={passInput} type="password" placeholder="Password" name="password"></input>
+            <input ref={userInput} type="text" placeholder="Username"
+                   onKeyDown={(e) => handleKeyPress(e)}></input>
+            <input ref={passInput} type="password" placeholder="Password"
+                   onKeyDown={(e) => handleKeyPress(e)}></input>
             <button onClick={() => handleLogin()}>Login</button>
             <p>{message}</p>
         </div>

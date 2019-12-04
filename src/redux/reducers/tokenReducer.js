@@ -1,4 +1,4 @@
-import { SET_TOKEN } from '../actions/token';
+import { SET_TOKEN, CLEAR_TOKEN } from '../actions/token';
 
 function tokenReducer(state = { token: '' }, action) {
     switch(action.type) {
@@ -6,6 +6,11 @@ function tokenReducer(state = { token: '' }, action) {
             return {
                 ...state,
                 token: action.payload
+            }
+        case CLEAR_TOKEN:
+            return {
+                ...state,
+                token: ''
             }
         default:
             return state;

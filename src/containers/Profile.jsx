@@ -8,7 +8,7 @@ import { setView, LOGIN, ACTIVE }  from '../redux/actions/view';
 import { setClassroom } from '../redux/actions/classroom';
 
 import ClassroomBlock from '../components/Profile/ClassroomBlock';
-import '../styles/Profile.css';
+import '../styles/Profile/Profile.css';
 
 
 const Profile = () => {

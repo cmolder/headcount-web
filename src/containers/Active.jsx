@@ -85,6 +85,7 @@ const Active = () => {
 		// update the classroom state to hold the deactivated classroom
 		if(classroomObj.active !== null && classroomObj.active === activeBool)
 			dispatch(setClassroom(classroomObj));
+			setAttendances([]);
 	}
 
 	const goBack = () => dispatch(setView(PROFILE));

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { setToken, clearToken } from '../redux/actions/token';
 import { setView, PROFILE } from '../redux/actions/view';
-import '../styles/Login.css';
+import '../styles/Login/Login.css';
 
 const Login = () => {
 

@@ -7,7 +7,7 @@ import { clearToken } from '../redux/actions/token';
 import { setView, LOGIN, ACTIVE }  from '../redux/actions/view';
 import { setClassroom } from '../redux/actions/classroom';
 
-import ClassroomBlock from '../components/ClassroomBlock';
+import ClassroomBlock from '../components/Profile/ClassroomBlock';
 import '../styles/Profile.css';
 
 

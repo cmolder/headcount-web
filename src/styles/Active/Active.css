@@ -11,20 +11,11 @@
 
 .Active p {
     color: #ffcc33;
-    margin: 15px;
     word-break: break-word;
 }
 
-.Active-classCode {
-    font-size: 128px;
-    font-family: 'Consolas', 'Lucida Console', sans-serif;
-    letter-spacing: 15px;
-}
 
 .Active button {
-    padding: 5px;
-    width: 20%;
-
     border: 1px solid #ffcc33;
     border-radius: 5px;
 }

@@ -1,0 +1,32 @@
+.ActiveHeader {
+    flex: 0;
+    width: 100%;
+    background: #333;
+
+    text-align: center;
+    align-items: center;
+    font-size: calc(10px + 2vmin);
+}
+
+.ActiveHeader p {
+    flex: 10;
+    margin: 8px 0 8px 0;
+}
+
+.ActiveHeader-top {
+    display: flex;
+    flex-direction: row;
+}
+
+.ActiveHeader-top button {
+    flex: 1;
+    margin: 10px;
+    height: 40px;
+    width: 50px;
+}
+
+.ActiveHeader-classcode {
+    font-size: 100px;
+    font-family: 'Consolas', 'Lucida Console', sans-serif;
+    letter-spacing: 15px;
+}

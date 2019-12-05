@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/ClassroomBlock.css';
+import '../../styles/ClassroomBlock.css';
 
 const ClassroomBlock = (props) => {
     const classroom = props.classroom;

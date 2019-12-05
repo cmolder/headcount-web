@@ -1,10 +1,10 @@
 import React from "react";
-import "../styles/AttendanceBlock.css";
+import "../../styles/Active/AttendanceBlock.css";
 
 const AttendanceBlock = props => {
   return (
     <div className="AttendanceBlock">
-      <p>{this.props.name} is here!</p>
+      <p>{props.name} is here!</p>
     </div>
   );
 };

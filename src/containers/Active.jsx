@@ -1,18 +1,24 @@
 import React from "react";
-import "../styles/Login.css";
 
+// Redux
+import { useSelector } from 'react-redux';
+
+
+
+import "../styles/Active.css";
 const Active = () => {
+
+  const classroom = useSelector(state => state.classroom.classroom);
+
+
+
   return (
     <div className="Active">
-      <div className="App">
-        <div className="App-header">
-          <p>
-            Mark you are here in the <b>Bee Here</b> app and entering the
-            following code with your student ID
-          </p>
-          <p>6898898</p>
-        </div>
-      </div>
+      <p>
+        Mark you are here in the <b>Bee Here</b> app and entering the
+        following code with your student ID
+      </p>
+      <p className='Active-classCode'>{classroom.active_session.class_code}</p>
     </div>
   );
 };

@@ -1,16 +1,12 @@
 import React from "react";
-import "../styles/Login.css";
+import "../styles/AttendanceBlock.css";
 
-const attendanceBlock = props => {
+const AttendanceBlock = props => {
   return (
-    <div className="attendanceBlock">
-      <div className="App">
-        <div className="App-header">
-          <p>{this.props.name} is here!</p>
-        </div>
-      </div>
+    <div className="AttendanceBlock">
+      <p>{this.props.name} is here!</p>
     </div>
   );
 };
 
-export default attendanceBlock;
+export default AttendanceBlock;

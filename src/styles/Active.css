@@ -1,0 +1,38 @@
+.Active {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    text-align: center;
+    align-items: center;
+    font-size: calc(10px + 2vmin);
+}
+
+
+.Active p {
+    color: #ffcc33;
+    margin: 15px;
+    word-break: break-word;
+}
+
+.Active-classCode {
+    font-size: 128px;
+    font-family: 'Consolas', 'Lucida Console', sans-serif;
+    letter-spacing: 15px;
+}
+
+.Active button {
+    padding: 5px;
+    width: 20%;
+
+    border: 1px solid #ffcc33;
+    border-radius: 5px;
+}
+
+.Active button:hover {
+    background-color: #bbb;
+}
+
+.Active button:active {
+    background-color: #888;
+}

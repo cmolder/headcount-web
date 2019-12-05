@@ -1,13 +1,15 @@
 .ClassroomBlock {
+    flex: 0;
+    height: 100px;
+
     display: flex;
     flex-direction: row;
 
     width: 80%;
     margin: 10px;
 
-    
     border: 3px solid #ffcc33;
-    border-radius: 10px;
+    border-radius: 20px;
     background: #444;
 }
 
@@ -21,10 +23,10 @@
 
 .ClassroomBlock-subsection {
     flex: 1;
-    padding: 10px;
+    padding: 15px;
     display: flex;
     flex-direction: column;
-    align-items: bottom;
+    justify-content: space-between;
 }
 
 .ClassroomBlock-text {

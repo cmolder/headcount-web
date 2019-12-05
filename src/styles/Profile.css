@@ -58,4 +58,6 @@
 .Profile-classrooms {
     flex: 3;
     height: 100%;
+
+    display: block;
 }

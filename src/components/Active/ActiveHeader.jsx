@@ -12,7 +12,7 @@ const ActiveHeader = (props) => {
                     Mark you are here in the <b>Bee Here</b> app and entering the
                     following code with your student ID
                 </p>
-                <button className='ActiveHeader-endbutton'>End session</button>
+                <button onClick={() => props.onEndSessionClick()}>End session</button>
             </div>
             
             <p className='ActiveHeader-classcode'>{classcode}</p>

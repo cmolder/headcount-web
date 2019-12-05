@@ -1,0 +1,13 @@
+.AttendanceBlock {
+    border: 3px solid #ffcc33;
+    border-radius: 20px;
+    background: #333;
+    width: 100%;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.AttendanceBlock-text {
+    padding: 0;
+    margin: 0;
+}

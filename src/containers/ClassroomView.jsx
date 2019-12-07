@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 
 // Redux
 import { useSelector, useDispatch } from 'react-redux';
-import { setView, PROFILE } from '../redux/actions/view';
-import { setClassroom } from "../redux/actions/classroom";
+import { setView, PROFILE, PAST_SESSION } from '../redux/actions/view';
+import { setClassroom, clearClassroom, setSession } from "../redux/actions/classroom";
 
 // Components
 import InactiveHeader from '../components/ClassroomView/InactiveHeader';
@@ -24,9 +24,6 @@ const ClassroomView = () => {
 	const token     = useSelector(state => state.token.token);
 	const classroom = useSelector(state => state.classroom.classroom);
 
-	const classcode = (classroom.active_session === null ? '' : classroom.active_session.class_code)
-
-	
 	// Runs from when the Classroom is loaded from the Redux store or the state
 	// of the classroom is changed (i.e toggled from active/inactive).
 	//
@@ -99,6 +96,7 @@ const ClassroomView = () => {
 				}
 			});
 			const studentObj = await studentResult.json();
+
 			newAttendanceList.push({
 				name: studentObj.name,
 				studentId: studentObj.student_id,
@@ -122,7 +120,7 @@ const ClassroomView = () => {
 		}
 
 		// Query the list of classroom sesssions
-		const queryResult = await fetch(API_URL + 'session?classroom=' + classroom.id,
+		const sessionResult = await fetch(API_URL + 'session?classroom=' + classroom.id,
 		{
 			method: 'GET',
 			headers: {
@@ -130,21 +128,21 @@ const ClassroomView = () => {
 				'Authorization': ('JWT ' + token),
 			}
 		});
-		const queryObj = await queryResult.json();
+		const sessionObj = await sessionResult.json();
 		
 
 		// For each session, get the list of attendanceList in a second query and
 		// push the info into the new sessionList array
 		let newSessionList = [];
 
-		for (const query of queryObj) {
-			const start = new Date(query.start); // Start time of session
-			const end   = new Date(query.end);   // End time of session
+		for (const session of sessionObj) {
+			const start = new Date(session.start); // Start time of session
+			const end   = new Date(session.end);   // End time of session
 
-			// Query the list of attendanceList
+			// Query all AttendanceTransactions that were from this session
 			let sessionAttendanceList = [];
 
-			const attendanceListResult = await fetch(API_URL + 'attendance?session=' + query.id,
+			const attendanceListResult = await fetch(API_URL + 'attendance?session=' + session.id,
 			{
 				method: 'GET',
 				headers: {
@@ -156,18 +154,15 @@ const ClassroomView = () => {
 
 			// Push each attendance transaction related to this session to the
 			// session's own attendanceList array
-			for (const attendance of attendanceObj) {
-				sessionAttendanceList.push({
-					name: attendance.name,
-					studentId: attendance.studentId
-				});
-			}
+			for (const attendance of attendanceObj)
+				sessionAttendanceList.push(attendance);
 
 			// Push the final object to the sessionList array
 			newSessionList.push({
-				start: start,
-				end:   end,
-				attendanceList: sessionAttendanceList,
+				...session,
+				start: start, // Override start string with DateTime obj
+				end:   end,	  // Override end string with DateTime obj
+				attendanceList: sessionAttendanceList, // Additional params
 				classSize: classroom.students.length
 			});
 		}
@@ -219,26 +214,34 @@ const ClassroomView = () => {
 	// Maps the Session state objects to SessionBlock components.
 	const getSessionBlocks = () => {
 		if(sessionList !== null)
-			return sessionList.map(session => (
-				<SessionBlock start={session.start}
+			return sessionList.reverse().map(session => (
+				<SessionBlock session={session}
+							  start={session.start}
 							  end={session.end}
 							  numAttending={session.attendanceList.length}
-							  numStudents={session.classSize}/>
+							  numStudents={session.classSize}
+							  onClick={session => goToSession(session)}/>
 			))
-
 		return <></>
 	}
 
 
-	const goBack = () => dispatch(setView(PROFILE));
+	const goBack = () => {
+		dispatch(setView(PROFILE));
+		dispatch(clearClassroom());
+	}
 
 
+	const goToSession = session => {
+		dispatch(setView(PAST_SESSION));
+		dispatch(setSession(session));
+	}
 
 	if(classroom.active === true) {
 		return (
 			<div className="ClassroomView">
 				<ActiveHeader classroom={classroom}
-							  classcode={classcode}
+							  classcode={(classroom.active_session === null ? '' : classroom.active_session.class_code)}
 							  numAttending={(attendanceList.length)}
 							  numStudents={(typeof classroom.students === 'undefined') ? 0 : classroom.students.length}
 							  onBackClick={() => goBack()}

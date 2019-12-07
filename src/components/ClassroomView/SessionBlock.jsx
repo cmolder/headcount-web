@@ -10,7 +10,8 @@ const SessionBlock = props => {
     const endTime   = props.end.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric' });
 
     return (
-        <div className='SessionBlock'>
+        <div className='SessionBlock'
+             onClick={() => props.onClick(props.session)}>
             <div className='SessionBlock-subsection'>
                 <p className='SessionBlock-text'><b>Date</b></p>
                 {(startDay === endDay) ? 

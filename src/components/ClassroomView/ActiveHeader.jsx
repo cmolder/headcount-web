@@ -1,5 +1,5 @@
 import React from 'react'; 
-import '../../styles/ClassroomView/ActiveHeader.css'
+import '../../styles/ClassroomView/ActiveHeader.css';
 
 const ActiveHeader = (props) => {
     const classcode = props.classcode;
@@ -22,7 +22,9 @@ const ActiveHeader = (props) => {
 
             <div className='ActiveHeader-sidecolumn'>
                 <button onClick={() => props.onEndSessionClick()}>End session</button>
-                <p className='ActiveHeader-text'>{props.numAttending}/{props.numStudents} present</p>
+                <p className='ActiveHeader-sidetext'>
+                    <b>{props.numAttending}/{props.numStudents} present</b>
+                </p>
             </div>
            
         </div>

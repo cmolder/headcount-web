@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { clearToken } from '../redux/actions/token';
-import { setView, LOGIN, ACTIVE }  from '../redux/actions/view';
+import { setView, LOGIN, CLASSROOM }  from '../redux/actions/view';
 import { setClassroom } from '../redux/actions/classroom';
 
 import ClassroomBlock from '../components/ProfileView/ClassroomBlock';
@@ -68,9 +68,9 @@ const ProfileView = () => {
 		dispatch(setView(LOGIN));
 	}
 	
-	const handleClassroomSelection = classroom => {
+	const goToClassroom = classroom => {
 		dispatch(setClassroom(classroom));
-		dispatch(setView(ACTIVE));
+		dispatch(setView(CLASSROOM));
 	}
 
 	const getClassroomBlocks = () => {
@@ -81,7 +81,7 @@ const ProfileView = () => {
 								number={classroom.department + ' ' + classroom.number}
 								rosterSize={classroom.students.length}
 								session={classroom.active_session}
-								onClick={classroom => handleClassroomSelection(classroom)}/>
+								onClick={classroom => goToClassroom(classroom)}/>
 			));
 		}
 		return <></>;

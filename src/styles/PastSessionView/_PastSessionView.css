@@ -1,0 +1,57 @@
+.PastSessionView {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    align-items: center;
+    font-size: calc(10px + 2vmin);
+}
+
+.PastSessionView p {
+    color: #ffcc33;
+    word-break: break-word;
+}
+
+
+.PastSessionView-attendances {
+    flex: 1;
+
+    width: 100%;
+    padding-top: 20px;
+
+    display: flex;
+    flex-direction: row;
+
+    justify-content: center;
+}
+
+.PastSessionView-studentlist {
+    flex: 1;
+    max-width: 45%;
+    width: auto;
+}
+
+.PastSessionView-listtitle {
+    margin: 0;
+}
+
+
+.PastSessionView-studenttext {
+    text-align: left;
+    padding: 0 0 0 10px;
+    margin: 0;
+}
+
+
+.PastSessionView button {
+    border: 1px solid #ffcc33;
+    border-radius: 5px;
+}
+
+.PastSessionView button:hover {
+    background-color: #bbb;
+}
+
+.PastSessionView button:active {
+    background-color: #888;
+}

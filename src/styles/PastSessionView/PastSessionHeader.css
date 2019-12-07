@@ -1,4 +1,4 @@
-.InactiveHeader {
+.PastSessionHeader {
     flex: 0;
     width: 100%;
     background: #333;
@@ -8,7 +8,7 @@
     font-size: calc(10px + 2vmin);
 }
 
-.InactiveHeader-sidecolumn {
+.PastSessionHeader-sidecolumn {
     flex: 0;
     min-width: 10%;
 
@@ -20,7 +20,7 @@
     align-items: center;
 }
 
-.InactiveHeader-centercolumn {
+.PastSessionHeader-centercolumn {
     flex: 1;
 
     display: flex;
@@ -30,13 +30,18 @@
     align-items: center;
 }
 
-.InactiveHeader p {
+.PastSessionHeader p {
     flex: 10;
     margin: 8px 0 8px 0;
 }
 
+.PastSessionHeader-text {
+    font-size: 18px;
+}
 
-.InactiveHeader button {
+.PastSessionHeader button {
     height: 40px;
     width: 100%;
 }
+
+

@@ -12,7 +12,7 @@ import AttendanceBlock from '../components/ClassroomView/AttendanceBlock';
 import SessionBlock from '../components/ClassroomView/SessionBlock';
 
 import { API_URL } from '../globals';
-import "../styles/ClassroomView/ClassroomView.css";
+import "../styles/ClassroomView/_ClassroomView.css";
 
 
 const ClassroomView = () => {

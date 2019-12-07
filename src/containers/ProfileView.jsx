@@ -10,7 +10,7 @@ import { setClassroom } from '../redux/actions/classroom';
 import ClassroomBlock from '../components/ProfileView/ClassroomBlock';
 
 import { API_URL } from '../globals';
-import '../styles/ProfileView/ProfileView.css';
+import '../styles/ProfileView/_ProfileView.css';
 
 
 const ProfileView = () => {

@@ -5,7 +5,7 @@ import { setToken, clearToken } from '../redux/actions/token';
 import { setView, PROFILE } from '../redux/actions/view';
 
 import { AUTH_URL } from '../globals';
-import '../styles/LoginView/LoginView.css';
+import '../styles/LoginView/_LoginView.css';
 
 const LoginView = () => {
 

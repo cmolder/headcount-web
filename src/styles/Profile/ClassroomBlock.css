@@ -10,15 +10,15 @@
 
     border: 3px solid #ffcc33;
     border-radius: 20px;
-    background: #444;
+    background: #333;
 }
 
 .ClassroomBlock:hover {
-    background: #777;
+    background: #555;
 }
 
 .ClassroomBlock:active {
-    background: #333;
+    background: #444;
 }
 
 .ClassroomBlock-subsection {
@@ -44,6 +44,7 @@
 }
 
 .ClassroomBlock-arrow {
-    padding-right: 25px;
-    flex: 0;
+    content: url('https://api.iconify.design/si-glyph:arrow-right.svg?color=%23ffcc33&height=40');
+    vertical-align: -0.125em;
+    padding-right: 15px;
 }

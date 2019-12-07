@@ -1,0 +1,48 @@
+.SessionBlock {
+    border: 3px solid #ffcc33;
+    border-radius: 20px;
+    background: #333;
+
+    width: auto;
+    
+    margin: 20px;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.SessionBlock:hover {
+    background: #555;
+}
+
+.SessionBlock:active {
+    background: #444;
+}
+
+.SessionBlock-text {
+    font-size: 24px;
+    padding: 0;
+    margin: 0;
+}
+
+.SessionBlock-subsection {
+    flex: 1;
+    min-height: 100px;
+
+    align-items: center;
+    justify-content: space-around;
+
+    padding: 15px;
+
+
+
+    display:  flex;
+    flex-direction: column;
+}
+
+.SessionBlock-arrow {
+    content: url('https://api.iconify.design/si-glyph:arrow-right.svg?color=%23ffcc33&height=40');
+    vertical-align: -0.125em;
+    padding-right: 15px;
+}

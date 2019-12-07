@@ -25,7 +25,6 @@ const ClassroomBlock = (props) => {
                 <p className='ClassroomBlock-text'>{(classcode === '') ? 'Currently inactive' : 'Currently active'}</p>
             </div>
             <div className='ClassroomBlock-arrow'>
-                <p>→</p>
             </div>
         </div>
     )

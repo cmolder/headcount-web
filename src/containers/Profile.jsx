@@ -14,31 +14,23 @@ import '../styles/Profile/Profile.css';
 
 
 const Profile = () => {
-	const [message, setMessage] = useState('');			// Greeting message (Hello, NAME) or error message if something went wrong
 	const [instructor, setInstructor] = useState(null); // Object containing instructor's data
 	const [classrooms, setClassrooms] = useState(null); // List of classrooms to be presented in this VIew
 
 	const dispatch = useDispatch();
-	const token = useSelector(state => state.token.token);
+	const token    = useSelector(state => state.token.token);
 
-	// These useEffect hooks are run only on the first Profile component render
+	// Runs only when the Profile component is initially oaded
+	// (i.e. the user just went to this page from another view)
 	//
-	// The first fetches the Instructor associated with the logged-in user,
-	// The second starts the API poll process for the instructor's Classrooms
-	//
-	// The second hook's polling process ends when the Profile component 
-	// is unmounted (i.e. the user goes to another view)
-	useEffect(() => { fetchInstructor() }, [])
-
+	// Polls the API first for the instructor based on the logged-in user, 
+	// then polls the API for the logged-in user's associated classrooms that
+	// they are the instructor of.
 	useEffect(() => {
-		fetchClassrooms(); // Do not wait for the first API poll
-		const pollApi = setInterval(() => {
-			// console.log('Polling the API for Classrooms..');
-			fetchClassrooms();
-		}, 3000);
-
-		return () => clearInterval(pollApi);
+		fetchInstructor();
+		fetchClassrooms();
 	}, []);
+
 
 	// Helper functions
 	const fetchInstructor = async () => {
@@ -52,20 +44,13 @@ const Profile = () => {
 		});
 		const queryObj = await queryResult.json();
 		
-		// If the request had a mistake / server had an error
-		if('detail' in queryObj)
-			setMessage(queryObj.detail);
-		else if (queryObj.length < 1)
-			setMessage('No instructor found');
-		else {
-			let instructor = queryObj[0];
-			setInstructor(instructor);
-			setMessage(instructor.title + ' ' + instructor.name);
-		}
+		if('detail' in queryObj) 		// If the request had a mistake / server had an error
+			console.error(queryObj.detail);
+		else if (queryObj.length > 0) 
+			setInstructor(queryObj[0]);
 	}
 
 	const fetchClassrooms = async () => {
-		
 		const queryResult = await fetch(API_URL + 'classroom?is_instructor=True',
 		{
 			method: 'GET',
@@ -83,7 +68,7 @@ const Profile = () => {
 		dispatch(setView(LOGIN));
 	}
 	
-	const handleClassroomSelection = (classroom) => {
+	const handleClassroomSelection = classroom => {
 		dispatch(setClassroom(classroom));
 		dispatch(setView(ACTIVE));
 	}
@@ -101,18 +86,13 @@ const Profile = () => {
 		}
 		return <></>;
 	}
-
-	// Code execution begins here
-	if(instructor === null)
-		fetchInstructor();
-
-
 		
-
 	return(
 		<div className='Profile'>
 			<div className='Profile-instructor'>
-				<p className='Profile-instructorTitle'>{message}</p>
+				<p className='Profile-instructorTitle'>
+					{(instructor === null) ? 'No instructor found.' : 'Hello, ' + instructor.title + ' ' + instructor.name + '.'}
+				</p>
 				<button onClick={() => logout()}>Log out</button>
 			</div>
 			<div className='Profile-classrooms'>

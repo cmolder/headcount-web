@@ -1,5 +1,5 @@
 import React from 'react'; 
-import '../../styles/Active/ActiveHeader.css'
+import '../../styles/ClassroomView/ActiveHeader.css'
 
 const ActiveHeader = (props) => {
     const classcode = props.classcode;

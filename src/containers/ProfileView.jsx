@@ -7,13 +7,13 @@ import { clearToken } from '../redux/actions/token';
 import { setView, LOGIN, ACTIVE }  from '../redux/actions/view';
 import { setClassroom } from '../redux/actions/classroom';
 
-import ClassroomBlock from '../components/Profile/ClassroomBlock';
+import ClassroomBlock from '../components/ProfileView/ClassroomBlock';
 
 import { API_URL } from '../globals';
-import '../styles/Profile/Profile.css';
+import '../styles/ProfileView/ProfileView.css';
 
 
-const Profile = () => {
+const ProfileView = () => {
 	const [instructor, setInstructor] = useState(null); // Object containing instructor's data
 	const [classrooms, setClassrooms] = useState(null); // List of classrooms to be presented in this VIew
 
@@ -88,18 +88,18 @@ const Profile = () => {
 	}
 		
 	return(
-		<div className='Profile'>
-			<div className='Profile-instructor'>
-				<p className='Profile-instructorTitle'>
+		<div className='ProfileView'>
+			<div className='ProfileView-instructor'>
+				<p className='ProfileView-instructorTitle'>
 					{(instructor === null) ? 'No instructor found.' : 'Hello, ' + instructor.title + ' ' + instructor.name + '.'}
 				</p>
 				<button onClick={() => logout()}>Log out</button>
 			</div>
-			<div className='Profile-classrooms'>
+			<div className='ProfileView-classrooms'>
 				{getClassroomBlocks()}
 			</div>	
 		</div>
 	);
 }
 
-export default Profile;
+export default ProfileView;

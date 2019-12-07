@@ -1,5 +1,5 @@
 import React from 'react'; 
-import '../../styles/Active/InactiveHeader.css'
+import '../../styles/ClassroomView/InactiveHeader.css'
 
 const InactiveHeader = (props) => {
 

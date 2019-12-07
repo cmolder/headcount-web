@@ -1,4 +1,4 @@
-.Profile {
+.ProfileView {
     display: flex;
     flex-direction: row;
     width: 100%;
@@ -10,7 +10,7 @@
     font-size: calc(10px + 2vmin);
 }
 
-.Profile input {
+.ProfileView input {
     margin-bottom: 10px;
     padding: 5px;
     width: 20%;
@@ -20,13 +20,13 @@
     font-family: 'Arial', sans-serif;
 }
 
-.Profile-instructorTitle {
+.ProfileView-instructorTitle {
     color: #ffcc33;
     margin: 15px;
     word-break: break-word;
 }
 
-.Profile button {
+.ProfileView button {
     width: 70%;
     border: 1px solid #ffcc33;
     border-radius: 5px;
@@ -35,15 +35,15 @@
     padding: 10px;
 }
 
-.Profile button:hover {
+.ProfileView button:hover {
     background-color: #bbb;
 }
 
-.Profile button:active {
+.ProfileView button:active {
     background-color: #888;
 }
 
-.Profile-instructor {
+.ProfileView-instructor {
     flex: 1;
     height: 100%;
 
@@ -55,7 +55,7 @@
     background-color: #333;
 }
 
-.Profile-classrooms {
+.ProfileView-classrooms {
     flex: 3;
     height: 100%;
 

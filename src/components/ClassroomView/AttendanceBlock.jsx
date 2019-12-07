@@ -1,5 +1,5 @@
 import React from "react";
-import "../../styles/Active/AttendanceBlock.css";
+import "../../styles/ClassroomView/AttendanceBlock.css";
 
 const AttendanceBlock = props => {
   return (

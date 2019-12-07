@@ -1,4 +1,4 @@
-.Login {
+.LoginView {
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -8,7 +8,7 @@
     font-size: calc(10px + 2vmin);
 }
 
-.Login input {
+.LoginView input {
     margin-bottom: 10px;
     padding: 5px;
     width: 20%;
@@ -18,13 +18,13 @@
     font-family: 'Arial', sans-serif;
 }
 
-.Login p {
+.LoginView p {
     color: #ffcc33;
     margin: 15px;
     word-break: break-word;
 }
 
-.Login button {
+.LoginView button {
     padding: 5px;
     width: 20%;
 
@@ -32,10 +32,10 @@
     border-radius: 5px;
 }
 
-.Login button:hover {
+.LoginView button:hover {
     background-color: #bbb;
 }
 
-.Login button:active {
+.LoginView button:active {
     background-color: #888;
 }

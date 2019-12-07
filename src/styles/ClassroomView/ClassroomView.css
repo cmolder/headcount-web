@@ -1,4 +1,4 @@
-.Active {
+.ClassroomView {
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -8,12 +8,12 @@
 }
 
 
-.Active p {
+.ClassroomView p {
     color: #ffcc33;
     word-break: break-word;
 }
 
-.Active-attendances {
+.ClassroomView-attendances {
     padding-top: 20px;
     width: 100%;
     display: grid;
@@ -22,28 +22,28 @@
     justify-content: space-around;
 }
 
-.Active-history {
+.ClassroomView-history {
     padding-top: 20px;
     width: 100%;
 
     display: block;
 }
 
-.Active-historyTitle {
+.ClassroomView-historyTitle {
     text-align: left;
     width: auto;
     margin: 0 20px 0 20px;
 }
 
-.Active button {
+.ClassroomView button {
     border: 1px solid #ffcc33;
     border-radius: 5px;
 }
 
-.Active button:hover {
+.ClassroomView button:hover {
     background-color: #bbb;
 }
 
-.Active button:active {
+.ClassroomView button:active {
     background-color: #888;
 }

@@ -1,9 +1,11 @@
 import React from 'react';
+
 import { useSelector } from 'react-redux';
 import { PROFILE, ACTIVE, LOGIN } from '../redux/actions/view';
-import Login from './Login';
-import Active from './Active';
-import Profile from './Profile';
+
+import LoginView from './LoginView';
+import ClassroomView from './ClassroomView';
+import ProfileView from './ProfileView';
 
 import "../styles/App.css";
 
@@ -14,7 +16,7 @@ function App() {
 		case ACTIVE: {
 			return (
 				<div className="App">
-					<Active/>
+					<ClassroomView/>
 				</div>
 			);
 		}
@@ -22,7 +24,7 @@ function App() {
 		case PROFILE: {
 			return (
 				<div className="App">
-					<Profile/>
+					<ProfileView/>
 				</div>
 			);
 		}
@@ -31,8 +33,8 @@ function App() {
 		default: { 
 			return (
 				<div className="App">
-					<Login />
-					</div>
+					<LoginView/>
+				</div>
 			);
 		}
 	}

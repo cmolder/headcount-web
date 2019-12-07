@@ -5,9 +5,9 @@ import { setToken, clearToken } from '../redux/actions/token';
 import { setView, PROFILE } from '../redux/actions/view';
 
 import { AUTH_URL } from '../globals';
-import '../styles/Login/Login.css';
+import '../styles/LoginView/LoginView.css';
 
-const Login = () => {
+const LoginView = () => {
 
     const [message, setMessage] = useState('');
 
@@ -52,7 +52,7 @@ const Login = () => {
     }
 
     return(
-        <div className='Login'>
+        <div className='LoginView'>
             <p>Bee Here Professor Login</p>
             <input ref={userInput} type="text" placeholder="Username"
                    onKeyDown={(e) => handleKeyPress(e)}></input>
@@ -64,4 +64,4 @@ const Login = () => {
     )
 }
 
-export default Login;
+export default LoginView;

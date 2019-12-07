@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../styles/Active/SessionBlock.css';
+import '../../styles/ClassroomView/SessionBlock.css';
 
 const SessionBlock = props => {
 

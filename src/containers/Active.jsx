@@ -1,35 +1,66 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 // Redux
 import { useSelector, useDispatch } from 'react-redux';
+import { setView, PROFILE, ACTIVE } from '../redux/actions/view';
+import { setClassroom } from "../redux/actions/classroom";
 
-import { setView, PROFILE } from '../redux/actions/view';
-
+// Components
 import InactiveHeader from '../components/Active/InactiveHeader';
 import ActiveHeader from '../components/Active/ActiveHeader';
 import AttendanceBlock from '../components/Active/AttendanceBlock';
+
+import { API_URL } from '../globals';
 import "../styles/Active/Active.css";
-import { setClassroom } from "../redux/actions/classroom";
+
 
 const Active = () => {
 
-	const [attendances, setAttendances] = useState(null);
+	const [attendances, setAttendances] = useState([]);
 
 	const dispatch  = useDispatch();
 	const token     = useSelector(state => state.token.token);
 	const classroom = useSelector(state => state.classroom.classroom);
 
 	const classcode = (classroom.active_session === null ? '' : classroom.active_session.class_code)
-	
-	async function fetchAttendances() {
 
-		let newAttendances = [];
+	// Runs from when the Classroom is loaded from the Redux store, querying the
+	// server for its associated active session's AttendanceTransactions
+	// (if the classroom is currently active)
+	//
+	// The polling process restarts when the Classroom is changed (i.e the Classroom
+	// is toggled from active/inactive)
+	//
+	// The polling process ends entirely when the Active component is dismounted
+	// (i.e. the user goes to another view)
+	useEffect(() => {
+		fetchAttendances(classroom); // Do not wait for the first interval period to pass
+									 // before initially fetching the AttendanceTransactions
 
-		if(classroom.active_session === null)
+		const pollApi = setInterval(() => {
+			// console.log('Polling the API for AttendanceTransactions...');
+			// console.log('Using this classroom...', classroom);
+			fetchAttendances(classroom);
+		}, 3000);
+
+		return () => clearInterval(pollApi);
+	}, [classroom]);
+
+
+	// Fetches the AttendanceTransactions from the server API and creates each one's
+	// related attendance object.
+	//
+	// The Student's name and ID is obtained from a separate API query based
+	// on the student's server ID in the AttendanceTransaction.
+	const fetchAttendances = async classroom => {
+
+		if(typeof classroom === 'undefined' || classroom.active === false || classroom.active_session === null) {
+			// console.log("The classroom is inactive. Cancelling poll process...");
 			return;
+		}
 
 		// Query the list of attendance transactions
-		const queryResult = await fetch('https://headcount-server.herokuapp.com/api/attendance?session=' + classroom.active_session.id,
+		const queryResult = await fetch(API_URL + 'attendance?session=' + classroom.active_session.id,
 		{
 			method: 'GET',
 			headers: {
@@ -42,9 +73,11 @@ const Active = () => {
 		// For each attendance transaction, get the student's info in a second query
 		// and push the info into the new attendances array
 		// (TODO) is there a clean way to integrate this into the serializer?
+		let newAttendances = [];
+
 		for (const query of queryObj) {
 			const studentServerId = query.student;
-			const studentResult = await fetch('https://headcount-server.herokuapp.com/api/student/' + studentServerId,
+			const studentResult = await fetch(API_URL + 'student/' + studentServerId,
 			{
 				method: 'GET',
 				headers: {
@@ -59,14 +92,13 @@ const Active = () => {
 			});
 		}
 
-		// console.log(newAttendances);
 		setAttendances(newAttendances);
 	}
 
-	async function setActiveSession(activeBool) {
+	const setClassroomActiveTo = async (classroom, active) => {
 		// PATCH the classroom object to be not active
 		// (Server automatically deactivates the classroom for you)
-		const classroomResult = await fetch('https://headcount-server.herokuapp.com/api/classroom/' + classroom.id, 
+		const queryResult = await fetch(API_URL + 'classroom/' + classroom.id, 
 		{
 			method: 'PATCH',
 			headers: {
@@ -74,18 +106,20 @@ const Active = () => {
 				'Authorization': ('JWT ' + token),
 			},
 			body: JSON.stringify({
-				'active': activeBool,
+				'active': active,
 			}),
 		});
 
 		// Returns a Classroom object
-		const classroomObj = await classroomResult.json();
+		const queryObj = await queryResult.json();
 
-		// If the deactivation request was succesful,
-		// update the classroom state to hold the deactivated classroom
-		if(classroomObj.active !== null && classroomObj.active === activeBool)
-			dispatch(setClassroom(classroomObj));
+		// If the activation/deactivation request was succesful,
+		// - update this component's Attendance state to hold an empty set of attendances
+		// - update this website's Classroom state to hold the updated classroom
+		if(queryObj.active !== null && queryObj.active === active) {
+			dispatch(setClassroom(queryObj));
 			setAttendances([]);
+		}
 	}
 
 	const goBack = () => dispatch(setView(PROFILE));
@@ -99,28 +133,16 @@ const Active = () => {
 		return <></>;
 	}
 
-	if(attendances === null) {
-		const pollFunction = (func, timeout = 60000, interval = 1000) => {
-			let startTime = (new Date()).getTime();
-			
-			(function poll(){
-				func();
-				if(((new Date()).getTime() - startTime) < timeout)
-					setTimeout(poll, interval);
-			})();
-		}
-
-		// Need to re-check attendances every interval ms
-		// to see if any have been added to the session
-		pollFunction(fetchAttendances, 600000, 3000);
-	}
 
 	if(classroom.active === true)
 		return (
 			<div className="Active">
-				<ActiveHeader classcode={classcode}
-							onBackClick={() => goBack()}
-							onEndSessionClick={() => setActiveSession(false)}/>
+				<ActiveHeader classroom={classroom}
+							  classcode={classcode}
+							  numAttending={(attendances.length)}
+							  numStudents={(typeof classroom.students === 'undefined') ? 0 : classroom.students.length}
+							  onBackClick={() => goBack()}
+							  onEndSessionClick={() => setClassroomActiveTo(classroom, false)}/>
 				<div className="Active-attendances">
 					{getAttendanceBlocks()}
 				</div>
@@ -128,8 +150,9 @@ const Active = () => {
 		);
 	else return(
 		<div className='Active'>
-			<InactiveHeader onBackClick={() => goBack()}
-							onStartSessionClick={() => setActiveSession(true)}/>
+			<InactiveHeader classroom={classroom}
+							onBackClick={() => goBack()}
+							onStartSessionClick={() => setClassroomActiveTo(classroom, true)}/>
 			<div className="Active-attendances">
 			</div>
 		</div>

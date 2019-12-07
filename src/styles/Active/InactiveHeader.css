@@ -3,9 +3,32 @@
     width: 100%;
     background: #333;
 
+    display: flex;
+
+    
+    font-size: calc(10px + 2vmin);
+}
+
+.InactiveHeader-sidecolumn {
+    flex: 0;
+    min-width: 10%;
+
+    display: flex;
+    flex-direction: column;
+
+    padding: 10px;
     text-align: center;
     align-items: center;
-    font-size: calc(10px + 2vmin);
+}
+
+.InactiveHeader-centercolumn {
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+
+    text-align: center;
+    align-items: center;
 }
 
 .InactiveHeader p {
@@ -13,14 +36,8 @@
     margin: 8px 0 8px 0;
 }
 
-.InactiveHeader-top {
-    display: flex;
-    flex-direction: row;
-}
 
-.InactiveHeader-top button {
-    flex: 1;
-    margin: 10px;
+.InactiveHeader button {
     height: 40px;
-    width: 50px;
+    width: 100%;
 }

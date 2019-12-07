@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,23 +8,41 @@ import { setView, LOGIN, ACTIVE }  from '../redux/actions/view';
 import { setClassroom } from '../redux/actions/classroom';
 
 import ClassroomBlock from '../components/Profile/ClassroomBlock';
+
+import { API_URL } from '../globals';
 import '../styles/Profile/Profile.css';
 
 
 const Profile = () => {
-
-	// TODO cancel API pinging when we leave this state
-
-	const [message, setMessage] = useState('');
-	const [instructor, setInstructor] = useState(null);
-	const [classrooms, setClassrooms] = useState(null);
+	const [message, setMessage] = useState('');			// Greeting message (Hello, NAME) or error message if something went wrong
+	const [instructor, setInstructor] = useState(null); // Object containing instructor's data
+	const [classrooms, setClassrooms] = useState(null); // List of classrooms to be presented in this VIew
 
 	const dispatch = useDispatch();
 	const token = useSelector(state => state.token.token);
 
+	// These useEffect hooks are run only on the first Profile component render
+	//
+	// The first fetches the Instructor associated with the logged-in user,
+	// The second starts the API poll process for the instructor's Classrooms
+	//
+	// The second hook's polling process ends when the Profile component 
+	// is unmounted (i.e. the user goes to another view)
+	useEffect(() => { fetchInstructor() }, [])
+
+	useEffect(() => {
+		fetchClassrooms(); // Do not wait for the first API poll
+		const pollApi = setInterval(() => {
+			// console.log('Polling the API for Classrooms..');
+			fetchClassrooms();
+		}, 3000);
+
+		return () => clearInterval(pollApi);
+	}, []);
+
 	// Helper functions
-	async function fetchInstructor() {
-		const queryResult = await fetch('https://headcount-server.herokuapp.com/api/instructor?is_user=True',
+	const fetchInstructor = async () => {
+		const queryResult = await fetch(API_URL + 'instructor?is_user=True',
 		{	
 			method: 'GET',
 			headers: {
@@ -36,19 +54,19 @@ const Profile = () => {
 		
 		// If the request had a mistake / server had an error
 		if('detail' in queryObj)
-			setMessage(queryObj['detail']);
+			setMessage(queryObj.detail);
 		else if (queryObj.length < 1)
 			setMessage('No instructor found');
 		else {
 			let instructor = queryObj[0];
 			setInstructor(instructor);
-			setMessage(instructor['title'] + ' ' + instructor['name']);
+			setMessage(instructor.title + ' ' + instructor.name);
 		}
 	}
 
-	async function fetchClassrooms() {
+	const fetchClassrooms = async () => {
 		
-		const queryResult = await fetch('https://headcount-server.herokuapp.com/api/classroom?is_instructor=True',
+		const queryResult = await fetch(API_URL + 'classroom?is_instructor=True',
 		{
 			method: 'GET',
 			headers: {
@@ -57,8 +75,6 @@ const Profile = () => {
 			}
 		});
 		const queryObj = await queryResult.json();
-
-		// TODO verify that there are actual classrooms here
 		setClassrooms(queryObj);
 	}
 
@@ -90,21 +106,7 @@ const Profile = () => {
 	if(instructor === null)
 		fetchInstructor();
 
-	if(classrooms === null) {
-		const pollFunction = (func, timeout = 60000, interval = 1000) => {
-			let startTime = (new Date()).getTime();
-			
-			(function poll(){
-				func();
-				if(((new Date()).getTime() - startTime) < timeout)
-					setTimeout(poll, interval);
-			})();
-		}
-		
-		// Need to re-check classrooms every interval ms
-		// to see if any have been deactivated
-		pollFunction(fetchClassrooms, 600000, 3000);
-	}
+
 		
 
 	return(

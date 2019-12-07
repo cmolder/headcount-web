@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
+
 import { useDispatch } from 'react-redux';
 import { setToken, clearToken } from '../redux/actions/token';
 import { setView, PROFILE } from '../redux/actions/view';
+
+import { AUTH_URL } from '../globals';
 import '../styles/Login/Login.css';
 
 const Login = () => {
@@ -18,7 +21,7 @@ const Login = () => {
     // - If invalid, returns an error message
     async function handleLogin() {
 
-        const authResult = await fetch("https://headcount-server.herokuapp.com/auth/",
+        const authResult = await fetch(AUTH_URL,
         {
             method: 'POST',
             body: JSON.stringify({
